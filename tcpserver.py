@@ -4,22 +4,16 @@ from file_over_network import *
 
 def main(serverPort):
     serverSocket = socket(AF_INET, SOCK_STREAM)
-    
     serverSocket.bind(('', serverPort))
-    
     serverSocket.listen(1)
     
-    print('The server is ready to receive')
+    print('Server is ready to receive')
     
     while True:
     	connectionSocket, addr = serverSocket.accept()
     
-    	request = connectionSocket.recv(1024).decode()
-
-        if request == "EXIT":
-            print("User exit received.")
-    	    connectionSocket.close()
-            exit(0)
+        # Act in a case insensitive manner
+    	request = connectionSocket.recv(1024).decode().upper()
 
         action = ""
         filename = ""
@@ -27,8 +21,6 @@ def main(serverPort):
         # Try and get the action and filename to operate on
         try:
             action, filename = request.split()
-            action = action.upper()
-            filename = filename.upper() 
         except:
             # failed to get a valid request
             sys.stderr.write("Didn't get a valid request, got: %s\n" % request)
