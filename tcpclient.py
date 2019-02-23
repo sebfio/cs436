@@ -9,9 +9,10 @@ def main(serverName, serverPort):
     
     command = input("Request and filename: ")
     
-    if request == "EXIT":
+    if command == "EXIT":
         print("User exit received.")
         # TODO: Do we need to shut down???
+        #clientSocket.shutdown(SHUT_WR)
         clientSocket.close()
         exit(0)
 
@@ -35,16 +36,18 @@ def main(serverName, serverPort):
     # Let OS pick us a free port
     s2Sock.bind(('', 0))
     s2SockPort        = s2Sock.getsockname()[1]
-    s2SockHostName    = socket.gethostname()
+    s2SockHostName    = gethostname()
     s2Info = str(s2SockPort) + "," + s2SockHostName
+    s2Sock.listen(1)
 
     clientSocket.send(s2Info.encode())
     clientSocket.close()
     
+    c2Sock, addr = s2Sock.accept()
     if action == "GET":
-        get_cmd(filename, s2Sock, 1024)
+        get_cmd(filename, c2Sock, 1024)
     elif action == "PUT":
-        put_cmd(filename, s2Sock, 1024)
+        put_cmd(filename, c2Sock, 1024)
     else:
         # Unknown action
         sys.stderr.write("Got an invalid action, need PUT or GET, got: %s\n" % action)
@@ -59,6 +62,6 @@ if __name__ == "__main__":
         exit(1)
     
     serverName = sys.argv[1]
-    serverPort = sys.argv[2] 
+    serverPort = int(sys.argv[2])
 
     main(serverName, serverPort)

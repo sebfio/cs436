@@ -10,10 +10,13 @@ def main(serverPort):
     print('Server is ready to receive')
     
     while True:
-    	connectionSocket, addr = serverSocket.accept()
+        connectionSocket, addr = serverSocket.accept()
     
         # Act in a case insensitive manner
-    	request = connectionSocket.recv(1024).decode().upper()
+        request = connectionSocket.recv(1024).decode().upper()
+        
+        if len(request) == 0:
+            continue
 
         action = ""
         filename = ""
@@ -24,20 +27,21 @@ def main(serverPort):
         except:
             # failed to get a valid request
             sys.stderr.write("Didn't get a valid request, got: %s\n" % request)
-    	    connectionSocket.close()
+            connectionSocket.close()
             break
 
-    	connectionSocket.send("OK".encode())
+        connectionSocket.send("OK".encode())
 
-    	# Get the <r_port>, <client_address>
+        # Get the <r_port>, <client_address>
         # TODO: What do we do if client sends junk port and addr over?
         request = connectionSocket.recv(1024).decode()
         # Done with stage 1 content
-    	connectionSocket.close()
+        connectionSocket.close()
 
         # Wont serialize this, instead just send over as a comma separated string
         # NOTE: "s2" prefix for stage 2 stuff
-        s2port, sAddr = request.split(",")
+        s2Port, s2Addr = request.split(",")
+        s2Port = int(s2Port)
         
         s2Sock = socket(AF_INET, SOCK_STREAM)
     
@@ -66,6 +70,6 @@ if __name__ == '__main__':
         sys.stderr.write("%s needs 2 arguments to run!\n" % sys.argv[0])
         exit(1)
 
-    serverPort = sys.argv[1] 
+    serverPort = int(sys.argv[1]) 
 
     main(serverPort)

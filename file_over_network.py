@@ -9,11 +9,10 @@ def put_cmd(filename, sock, buff_size):
         sock.send(segment)
         segment = f.read(buff_size)
     f.close()
-    s.shutdown(SHUT_WR)
 
 def get_cmd(filename, sock, buff_size):
     """ Takes filename and writes to it based on the read chunks from the open socket"""
-    f = open(filename, 'wb')
+    f = open("downloaded_" + filename, 'wb')
     segment = sock.recv(buff_size)
     while segment:
         f.write(segment)
