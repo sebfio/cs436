@@ -8,12 +8,16 @@ This program is written in python so no compilation is needed.
 This program was tested using python3 but python2 _should_ work.
 
 To launch the server:
-    `$ python3 tcpserver.py <PORT_NUMBER>`
+```
+python3 tcpserver.py <PORT_NUMBER>
+```
 
 To launch the client:
-    `$ python3 tcpclient.py <SERVER_HOSTNAME> <PORT_NUMBER>`
+```
+python3 tcpclient.py <SERVER_HOSTNAME> <PORT_NUMBER>
+```
 
 This can be tested on the following CS undergrad computers:
-    ubuntu1604-002.student.cs.uwaterloo.ca
-    ubuntu1604-006.student.cs.uwaterloo.ca
-    ubuntu1604-008.student.cs.uwaterloo.ca
+- ubuntu1604-002.student.cs.uwaterloo.ca
+- ubuntu1604-006.student.cs.uwaterloo.ca
+- ubuntu1604-008.student.cs.uwaterloo.ca
