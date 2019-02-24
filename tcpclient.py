@@ -8,6 +8,7 @@ def main(serverName, serverPort):
     clientSocket.connect((serverName, serverPort))
     
     command = input("Request and filename: ")
+    command = command.upper()
     
     if command == "EXIT":
         print("User exit received.")

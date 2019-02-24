@@ -1,8 +1,14 @@
 import sys
 from socket import *
+import os
 
 def put_cmd(filename, sock, buff_size):
     """ Takes filename and uploads by reading chunks and sending them over the open socket"""
+    if not os.path.exists(filename):
+        sys.stderr.write("File to send does not exist.\n")
+        sock.close()
+        return
+
     f = open(filename, 'rb')
     segment = f.read(buff_size)
     while segment:
