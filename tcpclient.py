@@ -6,8 +6,11 @@ def main(serverName, serverPort):
     """ Main program for running through the two step sequence to transfer files over between the two computers """
     clientSocket = socket(AF_INET, SOCK_STREAM)
     clientSocket.connect((serverName, serverPort))
-    
-    command = input("Request and filename: ")
+
+    command = ""
+    while command == "":
+        # Loop in case a user hits enter key wihtout entering text
+        command = input("Request and filename: ")
     
     if command == "EXIT" or command == "exit":
         print("User exit received.")

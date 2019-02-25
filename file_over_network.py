@@ -18,8 +18,8 @@ def put_cmd(filename, sock, buff_size):
 
 def get_cmd(filename, sock, buff_size):
     """ Takes filename and writes to it based on the read chunks from the open socket"""
-    # Prepend downloaded files with name "downloaded_" since it's on NFS and should have the file on both computers
-    f = open("downloaded_" + filename, 'wb')
+    # Postpend downloaded files with name ".downloaded" since it's on NFS and should have the file on both computers
+    f = open(filename + ".downloaded", 'wb')
     segment = sock.recv(buff_size)
     while segment:
         f.write(segment)

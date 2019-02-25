@@ -31,6 +31,8 @@ def main(serverPort):
         except:
             # failed to get a valid request
             sys.stderr.write("Didn't get a valid request, got: %s\n" % request)
+            # NOTE: The client will see a connection termination without getting a "OK"
+            # so it will understand the user input was not valid
             connectionSocket.close()
             continue
 
