@@ -22,3 +22,5 @@ This can be tested on the following CS undergrad computers:
 - ubuntu1604-006.student.cs.uwaterloo.ca
 - ubuntu1604-008.student.cs.uwaterloo.ca
 
+## NOTE: That if a file that is requested does not exist a blank file is transferred
+This was a design choice that was made as specific instruction for files that don't exist was not specified in the assignment.
