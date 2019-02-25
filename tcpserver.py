@@ -13,7 +13,7 @@ def main(serverPort):
         connectionSocket, addr = serverSocket.accept()
     
         # Act in a case insensitive manner
-        request = connectionSocket.recv(1024).decode().upper()
+        request = connectionSocket.recv(1024).decode()
         
         if len(request) == 0:
             continue
@@ -24,6 +24,7 @@ def main(serverPort):
         # Try and get the action and filename to operate on
         try:
             action, filename = request.split()
+            action = action.upper()
         except:
             # failed to get a valid request
             sys.stderr.write("Didn't get a valid request, got: %s\n" % request)

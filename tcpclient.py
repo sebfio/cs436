@@ -8,9 +8,8 @@ def main(serverName, serverPort):
     clientSocket.connect((serverName, serverPort))
     
     command = input("Request and filename: ")
-    command = command.upper()
     
-    if command == "EXIT":
+    if command == "EXIT" or command == "exit":
         print("User exit received.")
         # TODO: Do we need to shut down???
         #clientSocket.shutdown(SHUT_WR)
@@ -31,6 +30,7 @@ def main(serverName, serverPort):
     # NOTE: We know user properly entered request in the form <HTTP VERB> : <FILENAME>
     #   since the server responded with 'OK' hence no need for try/except here
     action, filename = command.split()
+    action = action.upper()
     
     # Stage 2 socket initialization, for stage 2, the client becomes the server
     s2Sock = socket(AF_INET, SOCK_STREAM)
