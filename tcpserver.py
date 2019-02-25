@@ -24,12 +24,15 @@ def main(serverPort):
         # Try and get the action and filename to operate on
         try:
             action, filename = request.split()
+            # only uppercase the 'action' -> ie "GET" "PUT" to halve the amount of condition checks
             action = action.upper()
+            if action != "GET" and action != "PUT":
+                raise
         except:
             # failed to get a valid request
             sys.stderr.write("Didn't get a valid request, got: %s\n" % request)
             connectionSocket.close()
-            break
+            continue
 
         connectionSocket.send("OK".encode())
 
@@ -54,11 +57,13 @@ def main(serverPort):
             # send the file over
             # NOTE: Since this is the server the action is reverse of what command was received
             put_cmd(filename, s2Sock, 1024)
+            print ("Sent file %s to client." % filename)
         elif action == "PUT":
             # recv the file
             get_cmd(filename, s2Sock, 1024)
+            print ("Got file %s from client." % filename)
         else:
-            # Unknown action
+            # Unknown action, note this is for redundancy sake
             sys.stderr.write("Got an invalid action, need PUT or GET, got: %s\n" % action)
             s2Sock.close()
             exit(1)

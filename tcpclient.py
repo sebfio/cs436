@@ -11,8 +11,6 @@ def main(serverName, serverPort):
     
     if command == "EXIT" or command == "exit":
         print("User exit received.")
-        # TODO: Do we need to shut down???
-        #clientSocket.shutdown(SHUT_WR)
         clientSocket.close()
         exit(0)
 
@@ -47,8 +45,10 @@ def main(serverName, serverPort):
     c2Sock, addr = s2Sock.accept()
     if action == "GET":
         get_cmd(filename, c2Sock, 1024)
+        print ("Got file %s from server." % filename)
     elif action == "PUT":
         put_cmd(filename, c2Sock, 1024)
+        print ("Put file %s to server." % filename)
     else:
         # Unknown action
         sys.stderr.write("Got an invalid action, need PUT or GET, got: %s\n" % action)
