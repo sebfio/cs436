@@ -5,8 +5,8 @@ import os
 def put_cmd(filename, sock, buff_size):
     """ Takes filename and uploads by reading chunks and sending them over the open socket"""
     if not os.path.exists(filename):
+        # The file doesn't exist so return. Nothing to send
         sys.stderr.write("File to send does not exist.\n")
-        sock.close()
         return
 
     f = open(filename, 'rb')
@@ -18,6 +18,7 @@ def put_cmd(filename, sock, buff_size):
 
 def get_cmd(filename, sock, buff_size):
     """ Takes filename and writes to it based on the read chunks from the open socket"""
+    # Prepend downloaded files with name "downloaded_" since it's on NFS and should have the file on both computers
     f = open("downloaded_" + filename, 'wb')
     segment = sock.recv(buff_size)
     while segment:
